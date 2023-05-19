@@ -17,6 +17,9 @@ public class Client {
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       out = new PrintWriter(socket.getOutputStream(), true);
       userInput = new BufferedReader(new InputStreamReader(System.in));
+
+      new MessageReceiver(in).start();
+
     } catch (IOException e) {
       System.out.println("Error connecting to server. Exiting...");
       System.exit(1);
@@ -26,11 +29,11 @@ public class Client {
   public void sendMessage() {
     try {
       String message;
-      while (!Objects.equals(message = userInput.readLine(), "exit")) {
-        out.println(message);
+      while (true) {
+        message = userInput.readLine();
+        if (Objects.equals(message, "exit")) break;
 
-        String response = in.readLine();
-        System.out.println(response);
+        out.println(message);
       }
     } catch (IOException e) {
       e.printStackTrace();
