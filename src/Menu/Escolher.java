@@ -18,9 +18,9 @@ public class Escolher {
   public GameLogic.Pergunta iniciar() {
     System.out.println("\nEscolha um personagem:");
     for (int i = 0; i < personagens.size(); i++) {
-      System.out.printf("%d - %s\n", i + 1, personagens.get(i).nome);
+      System.out.printf("%d - %s\n", i, personagens.get(i).nome);
     }
     int escolha = scanner.nextInt();
-    return new GameLogic.Pergunta(GameLogic.Trait.NOME, escolha - 1);
+    return new GameLogic.Pergunta(GameLogic.Trait.NOME, escolha);
   }
 }

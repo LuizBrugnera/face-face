@@ -1,47 +1,66 @@
-import java.io.BufferedReader;
+import GameLogic.Pergunta;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ClientHandler extends Thread {
+public class ClientHandler {
   private final Socket clientSocket;
-  private final Server server;
-  private PrintWriter out;
+  private ObjectInputStream in;
+  private ObjectOutputStream out;
 
-  public ClientHandler(Socket socket, Server server) {
-    this.clientSocket = socket;
-    this.server = server;
+  public void sendMessage(String message) throws IOException {
+    Protocol protocol = new Protocol(message);
+    out.writeObject(protocol);
+    out.flush();
   }
 
-  public void sendMessage(String message) {
-    out.println(message);
+  public int sendCharacterRequest() throws IOException, ClassNotFoundException {
+    Protocol protocol = new Protocol(Protocol.Type.CHARACTER_REQUEST);
+    out.writeObject(protocol);
+    out.flush();
+
+    Protocol response = (Protocol) in.readObject();
+    return response.getCharacterId();
   }
 
-  public void run() {
+  public Pergunta sendQuestionRequest() throws IOException, ClassNotFoundException {
+    Protocol protocol = new Protocol(Protocol.Type.QUESTION_REQUEST);
+    out.writeObject(protocol);
+    out.flush();
+
+    Protocol response = (Protocol) in.readObject();
+    return response.getPergunta();
+  }
+
+  public void close() {
     try {
-      System.out.println("Client connected: " + clientSocket);
-
-      out = new PrintWriter(clientSocket.getOutputStream(), true);
-      BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-      out.println("Enter your username: ");
-      String username = in.readLine();
-
-      String inputLine;
-      while ((inputLine = in.readLine()) != null) {
-        System.out.println("Received message: " + inputLine);
-        server.broadcastMessage(username + ": " + inputLine, this);
-      }
-
-      out.close();
+      sendCloseConnection();
       in.close();
+      out.close();
       clientSocket.close();
-      server.removeClient(this);
-
-      System.out.println("Connection to client closed.");
     } catch (IOException e) {
-      System.out.println("Connection to client lost.");
+      e.printStackTrace();
+    }
+  }
+
+  private void sendCloseConnection() throws IOException {
+    Protocol protocol = new Protocol(Protocol.Type.CLOSE_CONNECTION);
+    out.writeObject(protocol);
+    out.flush();
+  }
+
+  public ClientHandler(Socket clientSocket) {
+    this.clientSocket = clientSocket;
+
+    System.out.println("New client connected: " + clientSocket);
+
+    try {
+      this.out = new ObjectOutputStream(clientSocket.getOutputStream());
+      this.in = new ObjectInputStream(clientSocket.getInputStream());
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

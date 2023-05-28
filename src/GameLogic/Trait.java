@@ -1,6 +1,8 @@
 package GameLogic;
 
-public enum Trait {
+import java.io.Serializable;
+
+public enum Trait implements Serializable {
   COR_CABELO,
   COR_OLHOS,
   USA_OCULOS,

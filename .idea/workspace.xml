@@ -2,21 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2afb3220-b7c9-49ff-949e-3ccc4db49ff3" name="Changes" comment="print ip">
-      <change afterPath="$PROJECT_DIR$/src/GameLogic/CorCabelo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GameLogic/CorOlhos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GameLogic/Pergunta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GameLogic/Personagem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GameLogic/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GameLogic/Trait.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu/Cabelo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu/Escolher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu/Olhos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu/Pergunta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Resources/personagens.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SinglePlayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Utils/CharacterReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GameClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GameServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Protocol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/faceface.iml" beforeDir="false" afterPath="$PROJECT_DIR$/faceface.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameLogic/CorCabelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameLogic/CorCabelo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameLogic/CorOlhos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameLogic/CorOlhos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameLogic/Pergunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameLogic/Pergunta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameLogic/Personagem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameLogic/Personagem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameLogic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameLogic/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameLogic/Trait.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameLogic/Trait.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Menu/Escolher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu/Escolher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MessageReceiver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SinglePlayer.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +38,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2Q0gCNUv7MPoEZByDc7aAGbaxlA" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -47,6 +52,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
@@ -59,39 +65,33 @@
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.SinglePlayer">
-    <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Client" />
+  <component name="RunManager" selected="Application.GameClient">
+    <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GameClient" />
       <module name="faceface" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Server" />
-      <module name="faceface" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SinglePlayer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SinglePlayer" />
+    <configuration name="GameServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GameServer" />
       <module name="faceface" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.SinglePlayer" />
-      <item itemvalue="Application.Client" />
-      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.GameClient" />
+      <item itemvalue="Application.GameServer" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SinglePlayer" />
-        <item itemvalue="Application.Client" />
-        <item itemvalue="Application.Server" />
+        <item itemvalue="Application.GameClient" />
+        <item itemvalue="Application.GameServer" />
       </list>
     </recent_temporary>
   </component>

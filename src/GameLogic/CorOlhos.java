@@ -1,6 +1,8 @@
 package GameLogic;
 
-public enum CorOlhos {
+import java.io.Serializable;
+
+public enum CorOlhos implements Serializable {
   AZUL,
   VERDE,
   CASTANHO,
