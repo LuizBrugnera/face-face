@@ -1,4 +1,4 @@
-package Utils;
+package common.Utils;
 
 public class Constants {
   public static final String SERVER_IP = "localhost";

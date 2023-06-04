@@ -1,8 +1,8 @@
-package Menu;
+package client.Menu;
 
-import GameLogic.CorOlhos;
-import GameLogic.Pergunta;
-import GameLogic.Trait;
+import common.GameLogic.CorOlhos;
+import common.GameLogic.Pergunta;
+import common.GameLogic.Trait;
 
 import java.util.Scanner;
 

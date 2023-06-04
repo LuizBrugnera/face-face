@@ -1,8 +1,8 @@
-package Menu;
+package client.Menu;
 
-import GameLogic.CorCabelo;
-import GameLogic.Pergunta;
-import GameLogic.Trait;
+import common.GameLogic.CorCabelo;
+import common.GameLogic.Pergunta;
+import common.GameLogic.Trait;
 
 import java.util.Scanner;
 

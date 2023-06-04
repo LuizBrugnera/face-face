@@ -1,17 +1,19 @@
-import GameLogic.Pergunta;
-import GameLogic.Personagem;
-import GameLogic.Player;
-import GameLogic.Trait;
-import Utils.CharacterReader;
+package server;
+
+import common.GameLogic.Pergunta;
+import common.GameLogic.Personagem;
+import common.GameLogic.Player;
+import common.GameLogic.Trait;
+import common.Utils.CharacterReader;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.List;
 
-import static Utils.Constants.CHARACTER_FILE_PATH;
-import static Utils.Constants.SERVER_PORT;
+import static common.Utils.Constants.CHARACTER_FILE_PATH;
+import static common.Utils.Constants.SERVER_PORT;
 
-public class GameServer {
+public class Main {
 
   private ClientHandler clientHandler1;
   private ClientHandler clientHandler2;
@@ -125,7 +127,7 @@ public class GameServer {
   }
 
   public static void main(String[] args) {
-    GameServer server = new GameServer();
+    Main server = new Main();
     server.start(SERVER_PORT);
   }
 }

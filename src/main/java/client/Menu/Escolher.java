@@ -1,6 +1,6 @@
-package Menu;
+package client.Menu;
 
-import GameLogic.Personagem;
+import common.GameLogic.Personagem;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,12 +15,12 @@ public class Escolher {
     this.personagens = personagens;
   }
 
-  public GameLogic.Pergunta iniciar() {
+  public common.GameLogic.Pergunta iniciar() {
     System.out.println("\nEscolha um personagem:");
     for (int i = 0; i < personagens.size(); i++) {
       System.out.printf("%d - %s\n", i, personagens.get(i).nome);
     }
     int escolha = scanner.nextInt();
-    return new GameLogic.Pergunta(GameLogic.Trait.NOME, escolha);
+    return new common.GameLogic.Pergunta(common.GameLogic.Trait.NOME, escolha);
   }
 }

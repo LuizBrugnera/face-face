@@ -1,4 +1,7 @@
-import GameLogic.Pergunta;
+package server;
+
+import common.GameLogic.Pergunta;
+import common.Protocol;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

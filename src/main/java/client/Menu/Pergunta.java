@@ -1,7 +1,7 @@
-package Menu;
+package client.Menu;
 
-import GameLogic.Personagem;
-import GameLogic.Trait;
+import common.GameLogic.Personagem;
+import common.GameLogic.Trait;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public class Pergunta {
     this.personagens = personagens;
   }
 
-  public GameLogic.Pergunta iniciar() {
+  public common.GameLogic.Pergunta iniciar() {
     boolean sair = false;
 
     while (!sair) {
@@ -34,7 +34,7 @@ public class Pergunta {
         case 2:
           return new Olhos(scanner).iniciar();
         case 3:
-          return new GameLogic.Pergunta(Trait.USA_OCULOS, 1);
+          return new common.GameLogic.Pergunta(Trait.USA_OCULOS, 1);
         case 4:
           return new Escolher(scanner, personagens).iniciar();
         case 5:

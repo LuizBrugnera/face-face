@@ -1,8 +1,8 @@
-package Utils;
+package common.Utils;
 
-import GameLogic.CorCabelo;
-import GameLogic.CorOlhos;
-import GameLogic.Personagem;
+import common.GameLogic.CorCabelo;
+import common.GameLogic.CorOlhos;
+import common.GameLogic.Personagem;
 
 import java.io.BufferedReader;
 import java.io.IOException;

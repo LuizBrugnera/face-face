@@ -1,5 +1,8 @@
-import GameLogic.Personagem;
-import Utils.CharacterReader;
+package client;
+
+import common.GameLogic.Personagem;
+import common.Protocol;
+import common.Utils.CharacterReader;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,9 +11,9 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 
-import static Utils.Constants.*;
+import static common.Utils.Constants.*;
 
-public class GameClient {
+public class Main {
 
   private ObjectOutputStream out;
   private ObjectInputStream in;
@@ -53,11 +56,13 @@ public class GameClient {
     switch (response.getRequestType()) {
       case CHARACTER_REQUEST -> handleCharacterRequest();
       case QUESTION_REQUEST -> handleQuestionRequest();
-      case CLOSE_CONNECTION -> {
-        System.out.println("Closing connection...");
-        System.exit(0);
-      }
+      case CLOSE_CONNECTION -> handleCloseConnection();
     }
+  }
+
+  private static void handleCloseConnection() {
+    System.out.println("Closing connection...");
+    System.exit(0);
   }
 
   private void handleCharacterRequest() throws IOException {
@@ -71,8 +76,8 @@ public class GameClient {
   }
 
   private void handleQuestionRequest() throws IOException {
-    Menu.Pergunta menuPergunta = new Menu.Pergunta(scanner, personagens);
-    GameLogic.Pergunta pergunta = menuPergunta.iniciar();
+    client.Menu.Pergunta menuPergunta = new client.Menu.Pergunta(scanner, personagens);
+    common.GameLogic.Pergunta pergunta = menuPergunta.iniciar();
 
     Protocol protocol = new Protocol(Protocol.Type.QUESTION_RESPONSE, pergunta);
 
@@ -80,7 +85,7 @@ public class GameClient {
   }
 
   public static void main(String[] args) {
-    GameClient client = new GameClient();
+    Main client = new Main();
     client.start();
   }
 }

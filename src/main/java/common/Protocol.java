@@ -1,4 +1,6 @@
-import GameLogic.Pergunta;
+package common;
+
+import common.GameLogic.Pergunta;
 
 import java.io.Serial;
 import java.io.Serializable;
