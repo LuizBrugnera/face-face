@@ -1,17 +1,19 @@
 package server;
 
-import common.GameLogic.Pergunta;
-import common.GameLogic.Personagem;
-import common.GameLogic.Player;
-import common.GameLogic.Trait;
-import common.Utils.CharacterReader;
+import common.logic.Pergunta;
+import common.logic.Personagem;
+import common.logic.Player;
+import common.logic.Trait;
+import common.utils.CharacterReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.List;
 
-import static common.Utils.Constants.CHARACTER_FILE_PATH;
-import static common.Utils.Constants.SERVER_PORT;
+import static common.utils.Constants.CHARACTER_FILE_PATH;
+import static common.utils.Constants.SERVER_PORT;
 
 public class Main {
 
@@ -22,6 +24,8 @@ public class Main {
 
   private boolean endGame = false;
 
+  private final Logger logger = LoggerFactory.getLogger(Main.class);
+
   public void start(int port) {
     CharacterReader characterReader = new CharacterReader();
     List<Personagem> personagens = characterReader.lerPersonagens(CHARACTER_FILE_PATH);
@@ -29,10 +33,7 @@ public class Main {
     try (ServerSocket serverSocket = new ServerSocket(port)) {
       initializePlayers(serverSocket);
 
-      presentCharacters(personagens, clientHandler1);
       assignCharacterToPlayer(personagens, clientHandler1, true);
-
-      presentCharacters(personagens, clientHandler2);
       assignCharacterToPlayer(personagens, clientHandler2, false);
 
       startGameLoop(personagens);
@@ -45,42 +46,44 @@ public class Main {
     }
   }
 
-  private void startGameLoop(List<Personagem> personagems) throws IOException, ClassNotFoundException {
+  private void startGameLoop(List<Personagem> personagens) throws IOException, ClassNotFoundException {
     do {
-      handleQuestionLoop(personagems, clientHandler1, player1, player2, "1");
+      handleQuestionLoop(personagens, clientHandler1, player1, player2, "1");
       if (endGame) {
         break;
       }
-      handleQuestionLoop(personagems, clientHandler2, player2, player1, "2");
+      handleQuestionLoop(personagens, clientHandler2, player2, player1, "2");
     } while (!endGame);
   }
 
-  private void handleQuestionLoop(List<Personagem> personagems, ClientHandler clientHandler, Player askingPlayer, Player answeringPlayer, String playerId) throws IOException, ClassNotFoundException {
-    clientHandler.sendMessage("Player " + playerId + " is making a question...");
+  private void handleQuestionLoop(List<Personagem> personagens, ClientHandler clientHandler, Player askingPlayer, Player answeringPlayer, String playerId) throws IOException, ClassNotFoundException {
+    clientHandler.sendMessage("Jogador " + playerId + " está fazendo uma pergunta...");
     Pergunta pergunta = clientHandler.sendQuestionRequest();
 
     if (pergunta == null) {
-      broadcastMessage("Player " + playerId + " passed his turn");
+      broadcastMessage("Jogador " + playerId + " passou a vez.");
       return;
     }
 
-    boolean isGuess = pergunta.trait == Trait.NOME;
+    boolean isGuess = pergunta.trait() == Trait.NOME;
     if (isGuess) {
-      handlePlayerGuess(answeringPlayer, personagems, pergunta, playerId);
+      handlePlayerGuess(answeringPlayer, personagens, pergunta, playerId);
       return;
     }
 
     boolean resposta = askingPlayer.fazerPergunta(pergunta, answeringPlayer.getPersonagem());
-    clientHandler.sendMessage("Resposta: " + (resposta ? "Sim" : "Não"));
+    clientHandler.sendQuestionResponse(resposta, false);
   }
 
-  private void handlePlayerGuess(Player answeringPlayer, List<Personagem> personagems, Pergunta pergunta, String playerId) throws IOException {
-    Personagem guess = personagems.get(pergunta.value);
+  private void handlePlayerGuess(Player answeringPlayer, List<Personagem> personagens, Pergunta pergunta, String playerId) throws IOException {
+    Personagem guess = personagens.get(pergunta.value());
 
     boolean isCorrect = answeringPlayer.getPersonagem().equals(guess);
 
-    broadcastMessage("Player " + playerId + " guessed " + guess.nome + " and " + (isCorrect ? "won!" : "lost!"));
-    broadcastMessage("Ending game...");
+    broadcastMessage("Jogador " + playerId + " chutou " + guess.getNome() + " e " + (isCorrect ? "ganhou!" : "perdeu!"));
+    broadcastMessage("Encerrando jogo...");
+
+    clientHandler1.sendQuestionResponse(isCorrect, true);
     endGame = true;
   }
 
@@ -90,21 +93,14 @@ public class Main {
   }
 
   private void initializePlayers(ServerSocket serverSocket) throws IOException {
-    System.out.println("Server started, waiting for player 1...");
+    logger.info("Server started, waiting for player 1...");
     clientHandler1 = new ClientHandler(serverSocket.accept());
 
-    System.out.println("Player 1 connected, waiting for player 2...");
-    clientHandler1.sendMessage("Waiting for player 2...");
+    logger.info("Player 1 connected, waiting for player 2...");
+    clientHandler1.sendMessage("Esperando o jogador 2...");
 
     clientHandler2 = new ClientHandler(serverSocket.accept());
-    System.out.println("Player 2 connected, starting game...");
-  }
-
-  private void presentCharacters(List<Personagem> personagens, ClientHandler clientHandler) throws IOException {
-    clientHandler.sendMessage("Choose a character:");
-    for (int i = 0; i < personagens.size(); i++) {
-      clientHandler.sendMessage(i + " - " + personagens.get(i).nome);
-    }
+    logger.info("Player 2 connected, starting game...");
   }
 
   private void assignCharacterToPlayer(List<Personagem> personagens, ClientHandler clientHandler, boolean isFirstPlayer) throws IOException, ClassNotFoundException {
@@ -123,7 +119,7 @@ public class Main {
     }
 
     String playerId = isFirstPlayer ? "1" : "2";
-    System.out.println("Player " + playerId + " chose " + player.getPersonagem().nome);
+    logger.info("Player " + playerId + " chose " + player.getPersonagem().getNome());
   }
 
   public static void main(String[] args) {

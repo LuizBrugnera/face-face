@@ -1,8 +1,8 @@
-package common.Utils;
+package common.utils;
 
-import common.GameLogic.CorCabelo;
-import common.GameLogic.CorOlhos;
-import common.GameLogic.Personagem;
+import common.logic.CorCabelo;
+import common.logic.CorOlhos;
+import common.logic.Personagem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,15 +25,15 @@ public class CharacterReader {
 
     try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
       // Ler a linha do cabeçalho
-      linha = br.readLine();
+      br.readLine();
 
       while ((linha = br.readLine()) != null) {
         String[] campos = linha.split(",");
         Personagem personagem = new Personagem();
-        personagem.nome = campos[0].trim();
-        personagem.corCabelo = CorCabelo.valueOf(campos[1].trim());
-        personagem.corOlhos = CorOlhos.valueOf(campos[2].trim());
-        personagem.usaOculos = campos[3].trim().equalsIgnoreCase("sim");
+        personagem.setNome(campos[0].trim());
+        personagem.setCorCabelo(CorCabelo.valueOf(campos[1].trim()));
+        personagem.setCorOlhos(CorOlhos.valueOf(campos[2].trim()));
+        personagem.setUsaOculos(campos[3].trim().equalsIgnoreCase("sim"));
         personagens.add(personagem);
       }
     } catch (IOException e) {

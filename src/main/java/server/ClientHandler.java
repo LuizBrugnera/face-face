@@ -1,7 +1,9 @@
 package server;
 
-import common.GameLogic.Pergunta;
 import common.Protocol;
+import common.logic.Pergunta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -37,6 +39,18 @@ public class ClientHandler {
     return response.getPergunta();
   }
 
+  public void sendQuestionResponse(boolean resposta, boolean isGuess) {
+    Protocol.Type type = isGuess ? Protocol.Type.GUESS_RESPONSE : Protocol.Type.QUESTION_RESPONSE;
+    Protocol protocol = new Protocol(type, resposta);
+
+    try {
+      out.writeObject(protocol);
+      out.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void close() {
     try {
       sendCloseConnection();
@@ -57,7 +71,8 @@ public class ClientHandler {
   public ClientHandler(Socket clientSocket) {
     this.clientSocket = clientSocket;
 
-    System.out.println("New client connected: " + clientSocket);
+    Logger logger = LoggerFactory.getLogger(ClientHandler.class);
+    logger.info("New client connected: " + clientSocket);
 
     try {
       this.out = new ObjectOutputStream(clientSocket.getOutputStream());

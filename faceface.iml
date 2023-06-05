@@ -8,5 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="projectlombok.lombok" level="project" />
+    <orderEntry type="library" exported="" name="ch.qos.logback.classic" level="project" />
   </component>
 </module>

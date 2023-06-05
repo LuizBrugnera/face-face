@@ -1,10 +1,12 @@
 package common;
 
-import common.GameLogic.Pergunta;
+import common.logic.Pergunta;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
 
+@Getter
 public class Protocol implements Serializable {
 
   @Serial
@@ -12,14 +14,13 @@ public class Protocol implements Serializable {
 
   public enum Type {
     CHARACTER_REQUEST, CHARACTER_RESPONSE,
-
     QUESTION_REQUEST, QUESTION_RESPONSE,
-
-    CLOSE_CONNECTION, NONE
+    GUESS_RESPONSE, CLOSE_CONNECTION, NONE
   }
 
   private Type requestType = Type.NONE;
   private Pergunta pergunta;
+  private boolean resposta;
   private String message;
   private int characterId;
 
@@ -31,8 +32,9 @@ public class Protocol implements Serializable {
     this.requestType = type;
   }
 
-  public String getMessage() {
-    return message;
+  public Protocol(Type questionResponse, boolean resposta) {
+    this.requestType = questionResponse;
+    this.resposta = resposta;
   }
 
   public Protocol(Type characterResponse, int characterId) {
@@ -45,15 +47,15 @@ public class Protocol implements Serializable {
     this.pergunta = pergunta;
   }
 
-  public Type getRequestType() {
-    return requestType;
+  @Override
+  public String toString() {
+    return "Protocol{" +
+            "requestType=" + requestType +
+            ", pergunta=" + pergunta +
+            ", resposta=" + resposta +
+            ", message='" + message + '\'' +
+            ", characterId=" + characterId +
+            '}';
   }
 
-  public int getCharacterId() {
-    return characterId;
-  }
-
-  public Pergunta getPergunta() {
-    return pergunta;
-  }
 }

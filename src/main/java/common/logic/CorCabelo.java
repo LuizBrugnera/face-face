@@ -1,4 +1,4 @@
-package common.GameLogic;
+package common.logic;
 
 import java.io.Serializable;
 

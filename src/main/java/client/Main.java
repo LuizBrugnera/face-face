@@ -1,33 +1,43 @@
 package client;
 
-import common.GameLogic.Personagem;
+import client.gui.Escolher;
+import client.gui.PerguntaMenu;
+import client.gui.Popup;
+import client.gui.Tabuleiro;
 import common.Protocol;
-import common.Utils.CharacterReader;
+import common.logic.Personagem;
+import common.utils.CharacterReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-import java.util.Scanner;
 
-import static common.Utils.Constants.*;
+import static common.utils.Constants.*;
 
 public class Main {
 
   private ObjectOutputStream out;
   private ObjectInputStream in;
-  private Scanner scanner;
 
   private List<Personagem> personagens;
+
+  private Tabuleiro tabuleiro;
+
+  private final Logger logger = LoggerFactory.getLogger(Main.class);
 
   public void start() {
     CharacterReader characterReader = new CharacterReader();
     personagens = characterReader.lerPersonagens(CHARACTER_FILE_PATH);
+    tabuleiro = new Tabuleiro();
 
     try (Socket socket = new Socket(SERVER_IP, SERVER_PORT)) {
       setupConnection(socket);
-      System.out.println("Client started...");
+      logger.info("Client started...");
+      tabuleiro.iniciar(personagens);
       runClientLoop();
 
     } catch (IOException | ClassNotFoundException e) {
@@ -38,7 +48,6 @@ public class Main {
   private void setupConnection(Socket socket) throws IOException {
     out = new ObjectOutputStream(socket.getOutputStream());
     in = new ObjectInputStream(socket.getInputStream());
-    scanner = new Scanner(System.in);
   }
 
   private void runClientLoop() throws IOException, ClassNotFoundException {
@@ -48,41 +57,66 @@ public class Main {
     }
   }
 
-  public void update(Protocol response) throws IOException {
+  public void update(Protocol response) {
+    logger.info("Receiving: " + response);
+
     if (response.getMessage() != null) {
-      System.out.println(response.getMessage());
+      tabuleiro.setStatus(response.getMessage());
     }
 
     switch (response.getRequestType()) {
       case CHARACTER_REQUEST -> handleCharacterRequest();
+      case QUESTION_RESPONSE -> handleQuestionResponse(response);
+      case GUESS_RESPONSE -> handleGuessResponse(response);
       case QUESTION_REQUEST -> handleQuestionRequest();
       case CLOSE_CONNECTION -> handleCloseConnection();
     }
   }
 
-  private static void handleCloseConnection() {
-    System.out.println("Closing connection...");
+  private void handleGuessResponse(Protocol response) {
+    String popupText = response.getMessage();
+    new Popup().iniciar(popupText, tabuleiro);
+  }
+
+  private void handleQuestionResponse(Protocol response) {
+    String popupText = "Resposta:" + (response.isResposta() ? " Sim" : " Não");
+    new Popup().iniciar(popupText, tabuleiro);
+  }
+
+  private void handleCloseConnection() {
+    logger.info("Closing connection...");
     System.exit(0);
   }
 
-  private void handleCharacterRequest() throws IOException {
-    System.out.println("Enter a number:");
-    int characterId = scanner.nextInt();
+  private void handleCharacterRequest() {
+    Escolher escolher = new Escolher(personagens, tabuleiro);
 
-    Protocol protocol = new Protocol(Protocol.Type.CHARACTER_RESPONSE, characterId);
-
-    out.writeObject(protocol);
-    out.flush();
+    escolher.iniciar(pergunta -> {
+      Protocol protocol = new Protocol(Protocol.Type.CHARACTER_RESPONSE, pergunta.value());
+      send(protocol);
+    });
   }
 
-  private void handleQuestionRequest() throws IOException {
-    client.Menu.Pergunta menuPergunta = new client.Menu.Pergunta(scanner, personagens);
-    common.GameLogic.Pergunta pergunta = menuPergunta.iniciar();
+  private void send(Protocol protocol) {
+    logger.info("Sending: " + protocol);
 
-    Protocol protocol = new Protocol(Protocol.Type.QUESTION_RESPONSE, pergunta);
-
-    out.writeObject(protocol);
+    try {
+      out.writeObject(protocol);
+      out.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
+
+  private void handleQuestionRequest() {
+    PerguntaMenu menuPergunta = new PerguntaMenu(personagens, tabuleiro);
+
+    menuPergunta.iniciar(pergunta -> {
+      Protocol protocol = new Protocol(Protocol.Type.QUESTION_RESPONSE, pergunta);
+      send(protocol);
+    });
+  }
+
 
   public static void main(String[] args) {
     Main client = new Main();
