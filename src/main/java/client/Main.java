@@ -7,6 +7,7 @@ import client.gui.Tabuleiro;
 import common.Protocol;
 import common.logic.Personagem;
 import common.utils.CharacterReader;
+import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,12 +30,12 @@ public class Main {
 
   private final Logger logger = LoggerFactory.getLogger(Main.class);
 
-  public void start() {
+  public void start(String serverHost, int port) {
     CharacterReader characterReader = new CharacterReader();
     personagens = characterReader.lerPersonagens(CHARACTER_FILE_PATH);
     tabuleiro = new Tabuleiro();
 
-    try (Socket socket = new Socket(SERVER_IP, SERVER_PORT)) {
+    try (Socket socket = new Socket(serverHost, port)) {
       setupConnection(socket);
       logger.info("Client started...");
       tabuleiro.iniciar(personagens);
@@ -65,11 +66,23 @@ public class Main {
     }
 
     switch (response.getRequestType()) {
-      case CHARACTER_REQUEST -> handleCharacterRequest();
-      case QUESTION_RESPONSE -> handleQuestionResponse(response);
-      case GUESS_RESPONSE -> handleGuessResponse(response);
-      case QUESTION_REQUEST -> handleQuestionRequest();
-      case CLOSE_CONNECTION -> handleCloseConnection();
+      case CHARACTER_REQUEST:
+        handleCharacterRequest();
+        break;
+      case QUESTION_REQUEST:
+        handleQuestionRequest();
+        break;
+      case GUESS_RESPONSE:
+        handleGuessResponse(response);
+        break;
+      case QUESTION_RESPONSE:
+        handleQuestionResponse(response);
+        break;
+      case CLOSE_CONNECTION:
+        handleCloseConnection();
+        break;
+      default:
+        break;
     }
   }
 
@@ -92,7 +105,7 @@ public class Main {
     Escolher escolher = new Escolher(personagens, tabuleiro);
 
     escolher.iniciar(pergunta -> {
-      Protocol protocol = new Protocol(Protocol.Type.CHARACTER_RESPONSE, pergunta.value());
+      Protocol protocol = new Protocol(Protocol.Type.CHARACTER_RESPONSE, pergunta.getValue());
       send(protocol);
     });
   }
@@ -119,7 +132,29 @@ public class Main {
 
 
   public static void main(String[] args) {
+    Options options = new Options();
+    Option port = new Option("p", "port", true, "server port");
+    Option host = new Option("h", "host", true, "server host");
+    port.setRequired(false);
+    options.addOption(host);
+    options.addOption(port);
+
+    CommandLineParser parser = new DefaultParser();
+    HelpFormatter formatter = new HelpFormatter();
+    CommandLine cmd = null;
+
+    try {
+      cmd = parser.parse(options, args);
+    } catch (ParseException e) {
+      System.out.println(e.getMessage());
+      formatter.printHelp("face-face", options);
+      System.exit(1);
+    }
+
+    int serverPort = Integer.parseInt(cmd.getOptionValue("port", DEFAULT_PORT));
+    String serverHost = cmd.getOptionValue("host", DEFAULT_HOST);
+
     Main client = new Main();
-    client.start();
+    client.start(serverHost, serverPort);
   }
 }

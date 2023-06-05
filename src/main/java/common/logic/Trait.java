@@ -3,8 +3,5 @@ package common.logic;
 import java.io.Serializable;
 
 public enum Trait implements Serializable {
-  COR_CABELO,
-  COR_OLHOS,
-  USA_OCULOS,
-  NOME
+  TEM_CABELO, SEXO, COR_PELE, COR_OLHOS, COR_CABELO, USA_OCULOS, USA_CHAPEU, NOME
 }

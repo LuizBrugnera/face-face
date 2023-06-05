@@ -5,6 +5,7 @@ import common.logic.Personagem;
 import common.logic.Player;
 import common.logic.Trait;
 import common.utils.CharacterReader;
+import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,7 @@ import java.net.ServerSocket;
 import java.util.List;
 
 import static common.utils.Constants.CHARACTER_FILE_PATH;
-import static common.utils.Constants.SERVER_PORT;
+import static common.utils.Constants.DEFAULT_PORT;
 
 public class Main {
 
@@ -27,6 +28,8 @@ public class Main {
   private final Logger logger = LoggerFactory.getLogger(Main.class);
 
   public void start(int port) {
+    logger.info("Starting game server on port " + port + "...");
+
     CharacterReader characterReader = new CharacterReader();
     List<Personagem> personagens = characterReader.lerPersonagens(CHARACTER_FILE_PATH);
 
@@ -57,7 +60,7 @@ public class Main {
   }
 
   private void handleQuestionLoop(List<Personagem> personagens, ClientHandler clientHandler, Player askingPlayer, Player answeringPlayer, String playerId) throws IOException, ClassNotFoundException {
-    clientHandler.sendMessage("Jogador " + playerId + " está fazendo uma pergunta...");
+    broadcastMessage("Jogador " + playerId + " está fazendo uma pergunta...");
     Pergunta pergunta = clientHandler.sendQuestionRequest();
 
     if (pergunta == null) {
@@ -65,7 +68,7 @@ public class Main {
       return;
     }
 
-    boolean isGuess = pergunta.trait() == Trait.NOME;
+    boolean isGuess = pergunta.getTrait() == Trait.NOME;
     if (isGuess) {
       handlePlayerGuess(answeringPlayer, personagens, pergunta, playerId);
       return;
@@ -76,7 +79,7 @@ public class Main {
   }
 
   private void handlePlayerGuess(Player answeringPlayer, List<Personagem> personagens, Pergunta pergunta, String playerId) throws IOException {
-    Personagem guess = personagens.get(pergunta.value());
+    Personagem guess = personagens.get(pergunta.getValue());
 
     boolean isCorrect = answeringPlayer.getPersonagem().equals(guess);
 
@@ -123,7 +126,26 @@ public class Main {
   }
 
   public static void main(String[] args) {
+    Options options = new Options();
+    Option input = new Option("p", "port", true, "server port");
+    input.setRequired(false);
+    options.addOption(input);
+
+    CommandLineParser parser = new DefaultParser();
+    HelpFormatter formatter = new HelpFormatter();
+    CommandLine cmd = null;
+
+    try {
+      cmd = parser.parse(options, args);
+    } catch (ParseException e) {
+      System.out.println(e.getMessage());
+      formatter.printHelp("face-face", options);
+      System.exit(1);
+    }
+
+    String serverPort = cmd.getOptionValue("port", DEFAULT_PORT);
+
     Main server = new Main();
-    server.start(SERVER_PORT);
+    server.start(Integer.parseInt(serverPort));
   }
 }

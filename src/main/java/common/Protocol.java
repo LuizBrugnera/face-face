@@ -3,13 +3,11 @@ package common;
 import common.logic.Pergunta;
 import lombok.Getter;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
 public class Protocol implements Serializable {
 
-  @Serial
   private static final long serialVersionUID = 1L;
 
   public enum Type {
@@ -49,13 +47,7 @@ public class Protocol implements Serializable {
 
   @Override
   public String toString() {
-    return "Protocol{" +
-            "requestType=" + requestType +
-            ", pergunta=" + pergunta +
-            ", resposta=" + resposta +
-            ", message='" + message + '\'' +
-            ", characterId=" + characterId +
-            '}';
+    return "Protocol{" + "requestType=" + requestType + ", pergunta=" + pergunta + ", resposta=" + resposta + ", message='" + message + '\'' + ", characterId=" + characterId + '}';
   }
 
 }

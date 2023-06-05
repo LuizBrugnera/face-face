@@ -11,7 +11,7 @@ public class Tabuleiro extends JFrame {
   private JLabel statusLabel;
 
   public void iniciar(List<Personagem> personagens) {
-    this.setTitle("Tabuleiro");
+    this.setTitle("Cara a Cara - Multiplayer");
     this.setSize(900, 500);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -38,7 +38,7 @@ public class Tabuleiro extends JFrame {
     for (Personagem personagem : personagens) {
       JButton button = new JButton(personagem.getNome());
 
-      Image image = new ImageIcon("src\\main\\resources\\avatar.png").getImage();
+      Image image = new ImageIcon("src\\main\\resources\\images\\" + personagem.getAvatar()).getImage();
       image = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
       button.setIcon(new ImageIcon(image));
 

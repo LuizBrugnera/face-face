@@ -1,8 +1,6 @@
 package common.utils;
 
-import common.logic.CorCabelo;
-import common.logic.CorOlhos;
-import common.logic.Personagem;
+import common.logic.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,9 +29,14 @@ public class CharacterReader {
         String[] campos = linha.split(",");
         Personagem personagem = new Personagem();
         personagem.setNome(campos[0].trim());
-        personagem.setCorCabelo(CorCabelo.valueOf(campos[1].trim()));
-        personagem.setCorOlhos(CorOlhos.valueOf(campos[2].trim()));
-        personagem.setUsaOculos(campos[3].trim().equalsIgnoreCase("sim"));
+        personagem.setAvatar(campos[1].trim());
+        personagem.setCorPele(CorPele.valueOf(campos[2].trim()));
+        personagem.setCorCabelo(CorCabelo.valueOf(campos[3].trim()));
+        personagem.setCorOlhos(CorOlhos.valueOf(campos[4].trim()));
+        personagem.setSexo(campos[5].trim().equalsIgnoreCase("MASCULINO"));
+        personagem.setTemCabelo(campos[6].trim().equalsIgnoreCase("SIM"));
+        personagem.setUsaOculos(campos[7].trim().equalsIgnoreCase("SIM"));
+        personagem.setUsaChapeu(campos[8].trim().equalsIgnoreCase("SIM"));
         personagens.add(personagem);
       }
     } catch (IOException e) {
