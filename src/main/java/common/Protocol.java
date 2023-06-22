@@ -2,6 +2,7 @@ package common;
 
 import common.logic.Pergunta;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -18,7 +19,9 @@ public class Protocol implements Serializable {
 
   private Type requestType = Type.NONE;
   private Pergunta pergunta;
+  @Setter
   private boolean resposta;
+  @Setter
   private String message;
   private int characterId;
 

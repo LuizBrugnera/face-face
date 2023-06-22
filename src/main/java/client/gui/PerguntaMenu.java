@@ -29,7 +29,7 @@ public class PerguntaMenu extends JFrame {
     JButton oculosButton = new JButton("Perguntar sobre uso de óculos");
     JButton chapeuButton = new JButton("Perguntar sobre uso de chapéu");
     JButton escolherButton = new JButton("Fazer escolha");
-    JButton sairButton = new JButton("Pular");
+    JButton sairButton = new JButton("Sair do jogo");
 
     cabeloButton.addActionListener(e -> {
       new EnumSelector<>(CorCabelo.class, "Escolha uma cor de cabelo", Trait.COR_CABELO, this).iniciar(callback);

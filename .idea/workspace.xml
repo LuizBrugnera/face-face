@@ -4,43 +4,16 @@
     <option name="SPLITTER_PROPORTION" value="0.35164836" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2afb3220-b7c9-49ff-949e-3ccc4db49ff3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/client.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/server.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/csv-editor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/commons_cli.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/common/logic/CorPele.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/arrasca.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/bruno.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/cebolinha.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/david.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/filipi.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/gabigol.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/marinho.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/pedro.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/pulgar.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ribeiro.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/santos.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/vidal.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="2afb3220-b7c9-49ff-949e-3ccc4db49ff3" name="Changes" comment="print ip">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/faceface.iml" beforeDir="false" afterPath="$PROJECT_DIR$/faceface.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/PerguntaMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/PerguntaMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/Popup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/Popup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/Tabuleiro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/Tabuleiro.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/common/Protocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/Protocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/logic/CorCabelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/logic/CorCabelo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/logic/CorOlhos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/logic/CorOlhos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/logic/Pergunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/logic/Pergunta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/logic/Personagem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/logic/Personagem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/common/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/logic/Trait.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/logic/Trait.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/utils/CharacterReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/utils/CharacterReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/utils/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/avatar.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/avatar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/personagens.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/personagens.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,26 +45,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "jdk.selected.JAVA_MODULE": "temurin-17",
-    "last_opened_file_path": "C:/Users/luand/IFSUL/face-face",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15136719",
-    "project.structure.side.proportion": "0.21774194",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "proofread"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;temurin-17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/luand/IFSUL/face-face&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.21774194&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;proofread&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="common.logic" />

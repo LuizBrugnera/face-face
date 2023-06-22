@@ -23,15 +23,17 @@ public class Main {
   private Player player1;
   private Player player2;
 
+  CharacterReader characterReader = new CharacterReader();
+
+  List<Personagem> personagens;
+
   private boolean endGame = false;
 
   private final Logger logger = LoggerFactory.getLogger(Main.class);
 
   public void start(int port) {
     logger.info("Starting game server on port " + port + "...");
-
-    CharacterReader characterReader = new CharacterReader();
-    List<Personagem> personagens = characterReader.lerPersonagens(CHARACTER_FILE_PATH);
+    personagens = characterReader.lerPersonagens(CHARACTER_FILE_PATH);
 
     try (ServerSocket serverSocket = new ServerSocket(port)) {
       initializePlayers(serverSocket);
@@ -64,7 +66,7 @@ public class Main {
     Pergunta pergunta = clientHandler.sendQuestionRequest();
 
     if (pergunta == null) {
-      broadcastMessage("Jogador " + playerId + " passou a vez.");
+      endGame = true;
       return;
     }
 
@@ -78,16 +80,22 @@ public class Main {
     clientHandler.sendQuestionResponse(resposta, false);
   }
 
-  private void handlePlayerGuess(Player answeringPlayer, List<Personagem> personagens, Pergunta pergunta, String playerId) throws IOException {
+  private void handlePlayerGuess(Player answeringPlayer, List<Personagem> personagens, Pergunta pergunta, String playerId) throws IOException, ClassNotFoundException {
     Personagem guess = personagens.get(pergunta.getValue());
 
     boolean isCorrect = answeringPlayer.getPersonagem().equals(guess);
+    String message = "Jogador " + playerId + " chutou " + guess.getNome() + " e " + (isCorrect ? "ganhou!" : "perdeu!");
 
-    broadcastMessage("Jogador " + playerId + " chutou " + guess.getNome() + " e " + (isCorrect ? "ganhou!" : "perdeu!"));
-    broadcastMessage("Encerrando jogo...");
+    if (playerId.equals("1")) {
+      clientHandler1.sendGuessResponse(message, isCorrect);
+      clientHandler2.sendGuessResponse(message, !isCorrect);
+    } else {
+      clientHandler1.sendGuessResponse(message, !isCorrect);
+      clientHandler2.sendGuessResponse(message, isCorrect);
+    }
 
-    clientHandler1.sendQuestionResponse(isCorrect, true);
-    endGame = true;
+    assignCharacterToPlayer(personagens, clientHandler1, true);
+    assignCharacterToPlayer(personagens, clientHandler2, false);
   }
 
   private void broadcastMessage(String message) throws IOException {

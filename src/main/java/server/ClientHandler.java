@@ -51,6 +51,20 @@ public class ClientHandler {
     }
   }
 
+  public void sendGuessResponse(String message, boolean isCorrect) {
+    Protocol protocol = new Protocol(Protocol.Type.GUESS_RESPONSE);
+
+    protocol.setMessage(message);
+    protocol.setResposta(isCorrect);
+
+    try {
+      out.writeObject(protocol);
+      out.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void close() {
     try {
       sendCloseConnection();

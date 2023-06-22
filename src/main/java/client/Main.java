@@ -28,6 +28,9 @@ public class Main {
 
   private Tabuleiro tabuleiro;
 
+  private int vitorias = 0;
+  private int derrotas = 0;
+
   private final Logger logger = LoggerFactory.getLogger(Main.class);
 
   public void start(String serverHost, int port) {
@@ -88,6 +91,14 @@ public class Main {
 
   private void handleGuessResponse(Protocol response) {
     String popupText = response.getMessage();
+    if (response.isResposta()) {
+      vitorias++;
+    } else {
+      derrotas++;
+    }
+
+    String score = "Vitórias: " + vitorias + " | Derrotas: " + derrotas;
+    tabuleiro.setScore(score);
     new Popup().iniciar(popupText, tabuleiro);
   }
 

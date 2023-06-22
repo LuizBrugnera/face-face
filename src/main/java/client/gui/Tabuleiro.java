@@ -10,6 +10,8 @@ public class Tabuleiro extends JFrame {
   private String status = "Aguardando jogadores...";
   private JLabel statusLabel;
 
+  private JLabel scoreLabel;
+
   public void iniciar(List<Personagem> personagens) {
     this.setTitle("Cara a Cara - Multiplayer");
     this.setSize(900, 500);
@@ -19,12 +21,19 @@ public class Tabuleiro extends JFrame {
     statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
     statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.PLAIN, 20));
 
+    scoreLabel = new JLabel("Vitórias: 0 | Derrotas: 0");
+    scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), Font.PLAIN, 20));
+
     JPanel bottomPanel = new JPanel();
     listarPersonagens(personagens, bottomPanel);
 
     this.getContentPane().add(statusLabel, BorderLayout.PAGE_START);
     this.getContentPane().add(new JLabel("Tabuleiro"), BorderLayout.CENTER);
     this.getContentPane().add(bottomPanel);
+
+    this.getContentPane().add(scoreLabel, BorderLayout.PAGE_END);
+
     this.setLocationRelativeTo(null);
     this.setVisible(true);
   }
@@ -32,6 +41,10 @@ public class Tabuleiro extends JFrame {
   public void setStatus(String status) {
     this.status = status;
     statusLabel.setText(status);
+  }
+
+  public void setScore(String score) {
+    scoreLabel.setText(score);
   }
 
   private static void listarPersonagens(List<Personagem> personagens, JPanel panel) {

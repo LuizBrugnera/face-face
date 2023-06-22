@@ -6,7 +6,7 @@ import java.awt.*;
 public class Popup extends JFrame {
   public void iniciar(String response, JFrame parentFrame) {
     this.setTitle("Resposta");
-    this.setSize(200, 100);
+    this.setSize(300, 150);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     JPanel panel = new JPanel(new BorderLayout());
